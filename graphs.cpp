@@ -3,31 +3,39 @@ using namespace std;
 
 class Graph {
     private:
-        int firstElement;
-        int secondElement;
+        int matrix[5][5];
 
     public:
         // Constructor
-        Graph(int firstElement, int secondElement) {
-            this->firstElement = firstElement;
-            this->secondElement = secondElement;
-            cout << "Graph constructor executed." << endl;
-            cout << "First elemet.	" << firstElement << endl;
-            cout << "Second elemet.	" << secondElement << endl;
+        Graph(int adjacencymatrix[5][5]) {
+        	for(int i=0; i<5; i++){
+        		for(int j=0; j<5; j++){
+        			matrix[i][j] = adjacencymatrix[i][j];
+				}
+			}
+			for(int i=0; i<5; i++){
+        		for(int j=0; j<5; j++){
+        			cout << matrix[i][j];
+				}
+			}
         }
+    
 };
 
 
 
 int main() {
-    // Passing arguments to the constructor
-    int adjacencymatrix[5][5] = {
+
+	
+    int adjacencymatrix[5][5]={
     	{1,2,3,4,5},
     	{6,7,8,9,0},
     	{1,2,3,4,5},
     	{6,7,8,9,0},
     	{1,2,3,4,5},
 	};
-    Graph graph1(adjacencymatrix[1][1], adjacencymatrix[2][2]);
+	
+    // Passing arguments to the constructor
+    Graph graph2(adjacencymatrix);
     return 0;
 }
