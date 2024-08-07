@@ -1,8 +1,22 @@
 #include<iostream>
 using namespace std;
 
-int main(){
-	char str[]= "hello world";
-	cout<<str;
-	return 0;
+class Graph {
+    private:
+        int id;
+        int name;
+
+    public:
+        // Constructor
+        Graph(int id, int name) {
+            this->id = id;
+            this->name = name;
+            cout << "Graph constructor executed." << endl;
+        }
+};
+
+int main() {
+    // Passing arguments to the constructor
+    Graph graph1(1, 10);
+    return 0;
 }
