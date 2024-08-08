@@ -1,9 +1,13 @@
-#include<iostream>
+#include <iostream>
+#include <climits>
 using namespace std;
+
 
 class Graph {
     private:
+//    	const int size;
         int matrix[5][5];
+        int NodeValues[5] = {0 , INT_MAX , INT_MAX , INT_MAX , INT_MAX};
 
     public:
         // Constructor
@@ -19,6 +23,19 @@ class Graph {
 				}
 			}
         }
+        void valueOfNodes(){
+        	for(int i=0; i<5; i++){
+        		for(int j=0; j<5; j++){
+        			if(matrix[i][j]!=0){
+        				cout << endl << "[" << i << "][" << j << "] = " << matrix[i][j];
+					};
+				}
+			}
+		}
+		
+		void dijkastraAlgo(){
+			cout << endl << "Hello World";
+		}
     
 };
 
@@ -26,16 +43,18 @@ class Graph {
 
 int main() {
 
-	
     int adjacencymatrix[5][5]={
-    	{1,2,3,4,5},
-    	{6,7,8,9,0},
-    	{1,2,3,4,5},
-    	{6,7,8,9,0},
-    	{1,2,3,4,5},
+    	{0, 1, 2, 0, 0},
+		{0, 0, 4, 5, 0},
+		{0, 0, 0, 0, 2},
+		{0, 0, 0, 0, 8},
+		{0, 3, 0, 0, 0}
 	};
 	
     // Passing arguments to the constructor
-    Graph graph2(adjacencymatrix);
+    Graph myGraph(adjacencymatrix);
+    
+    myGraph.valueOfNodes();
+    myGraph.dijkastraAlgo();
     return 0;
 }
