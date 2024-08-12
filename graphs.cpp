@@ -4,10 +4,9 @@ using namespace std;
 
 class Graph {
     private:
-        static const int size = 5;
+        static const int size = 5;  // keep it static constant or the code will shout at you
         int link[size][size];
         int node[size];
-        bool visited[size]; // To track visited nodes
 
     public:
         // Constructor
@@ -19,11 +18,17 @@ class Graph {
             }
             for (int i = 0; i < size; i++) {
                 node[i] = INT_MAX; // Initialize nodes with "infinity"
-                visited[i] = false; // Initialize all nodes as unvisited
             }
             node[0] = 0; // Starting node
         }
         
+        void resetNodes() {
+            for (int i = 0; i < size; i++) {
+                node[i] = INT_MAX;
+            }
+            node[0] = 0;
+        }
+
         void showLinks() {
             for (int i = 0; i < size; i++) {
                 for (int j = 0; j < size; j++) {
@@ -38,8 +43,10 @@ class Graph {
                 cout << "Node " << i << ": " << node[i] << endl;
             }
         }
-        
+
         void dijkstraAlgo() {
+            bool visited[size] = {false};
+
             for (int count = 0; count < size - 1; count++) {
                 int minDistance = INT_MAX;
                 int minIndex = -1;
@@ -64,33 +71,53 @@ class Graph {
                 }
             }
         }
+
+        void bellmanFordAlgo() {
+            // Relax all edges |V| - 1 times
+            for (int k = 0; k < size - 1; k++) {
+                for (int i = 0; i < size; i++) {
+                    for (int j = 0; j < size; j++) {
+                        if (link[i][j] != 0 && node[i] != INT_MAX 
+                            && node[i] + link[i][j] < node[j]) {
+                            node[j] = node[i] + link[i][j];
+                        }
+                    }
+                }
+            }
+            
+            // Check for negative-weight cycles
+            for (int i = 0; i < size; i++) {
+                for (int j = 0; j < size; j++) {
+                    if (link[i][j] != 0 && node[i] != INT_MAX 
+                        && node[i] + link[i][j] < node[j]) {
+                        cout << "Graph contains a negative-weight cycle" << endl;
+                        return;
+                    }
+                }
+            }
+        }
 };
 
-
-//			MIGHT USE LATER
-
-//    		int startIndex = 3;  						// Starting index
-//    		for (int i = 0; i < size; i++) {
-//    		    int index = (startIndex + i) % size;	// LEARN WTF THIS IS
-//    		    cout << index << " : " << node[index] << endl;	
-//		    }
-
-
-
 int main() {
-    int adjacencymatrix[5][5] = {
-        {0, 1, 2, 0, 0},
-        {0, 0, 4, 5, 0},
-        {0, 0, 0, 0, 2},
-        {0, 0, 0, 0, 8},
-        {0, 3, 0, 0, 0},
-    };
+int adjacencymatrix[5][5] = {
+    {0, -1,  4,  0,  0},
+    {0,  0,  3,  2,  2},
+    {0,  0,  0,  0,  0},
+    {0,  1,  5,  0,  0},
+    {0,  0,  0, -3,  0},
+};
 
     // Passing arguments to the constructor
     Graph myGraph(adjacencymatrix);
     
-    myGraph.dijkstraAlgo();
+    // Use Bellman-Ford algorithm
+    myGraph.bellmanFordAlgo();
     myGraph.showNodes();
+    
+    // To use Dijkstra's algorithm instead, reset nodes and uncomment the lines below:
+    // myGraph.resetNodes();
+    // myGraph.dijkstraAlgo();
+    // myGraph.showNodes();
 
     return 0;
 }
